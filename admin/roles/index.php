@@ -49,13 +49,13 @@ include('../../app/controllers/roles/listado_roles.php');
                                                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                                     <a href="show.php?id=<?php echo $id_rol;?>" type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
                                                     <a href="edit.php?id=<?php echo $id_rol;?>" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
-                                                    <form action="<?php echo APP_URL;?>/app/controllers/roles/delete.php" onclick="preguntar(event)" method="post" id="miFormulario<?php echo $id_rol;?>">
+                                                    <form action="<?php echo APP_URL;?>/app/controllers/roles/delete.php" onclick="preguntar<?php echo $id_rol;?>(event)" method="post" id="miFormulario<?php echo $id_rol;?>">
                                                         <input type="text" name="id_rol" value="<?php echo $id_rol;?>" hidden>
                                                         <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 0px 5px 5px 0px"><i class="bi bi-trash3"></i></button>
                                                     </form>
                                                     
                                                     <script>
-                                                        function preguntar(event){
+                                                        function preguntar<?php echo $id_rol;?>(event){
                                                             event.preventDefault()
                                                             Swal.fire({
                                                                 title: 'Eliminar Registro',
