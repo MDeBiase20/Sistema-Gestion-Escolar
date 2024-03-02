@@ -12,10 +12,10 @@ INSERT INTO roles (nombre_rol, fyh_creacion, estado) VALUES ('DIRECTOR ACADEMICO
 INSERT INTO roles (nombre_rol, fyh_creacion, estado) VALUES ('DIRECTOR ADMINISTRATIVO','2024-02-12 20:10:00','1');
 INSERT INTO roles (nombre_rol, fyh_creacion, estado) VALUES ('CONTADOR','2024-02-12 20:10:00','1');
 INSERT INTO roles (nombre_rol, fyh_creacion, estado) VALUES ('SECRETARIA','2024-02-12 20:10:00','1');
+INSERT INTO roles (nombre_rol, fyh_creacion, estado) VALUES ('DOCENTE','2024-02-12 20:10:00','1');
 
 CREATE TABLE usuarios (
     id_usuario INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombres    VARCHAR (255) NOT NULL,
     rol_id     INT     (11) NOT NULL,
     email      VARCHAR (255) NOT NULL UNIQUE KEY,
     password   TEXT    (255) NOT NULL,
@@ -27,8 +27,79 @@ CREATE TABLE usuarios (
     FOREIGN KEY (rol_id) REFERENCES roles (id_rol) ON DELETE NO ACTION ON UPDATE CASCADE 
 )ENGINE=InnoDB;
 
-INSERT INTO usuarios (nombres, rol_id, email, password, fyh_creacion, estado)
-VALUES ('Milton Exequiel De Biase', '1', 'mylton20@gmail.com', '$2y$10$m6jG.SzwuXTopEVUSBtBauhFTG02/aZF3qU7IqUmccvRACK2Ljfrq', '2024-02-12 15:30:00', '1')
+INSERT INTO usuarios (rol_id, email, password, fyh_creacion, estado)
+VALUES ('1', 'mylton20@gmail.com', '$2y$10$m6jG.SzwuXTopEVUSBtBauhFTG02/aZF3qU7IqUmccvRACK2Ljfrq', '2024-02-12 15:30:00', '1');
+
+
+CREATE TABLE personas (
+    id_persona       INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    usuario_id       INT     (11) NOT NULL,
+    nombres          VARCHAR (50) NOT NULL,
+    apellidos        VARCHAR (50) NOT NULL,
+    ci               VARCHAR (20) NOT NULL,
+    fecha_nacimiento VARCHAR (20) NOT NULL,
+    profesion        VARCHAR (50) NOT NULL,
+    direccion        VARCHAR (255) NOT NULL,
+    celular          VARCHAR (20) NOT NULL,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (usuario_id) REFERENCES usuarios (id_usuario) ON DELETE NO ACTION ON UPDATE CASCADE
+)ENGINE=InnoDB;
+/* El ci es el carnét de identidad*/
+INSERT INTO personas (usuario_id, nombres, apellidos, ci, fecha_nacimiento, profesion, direccion, celular, fyh_creacion, estado)
+VALUES ('1', 'Milton Exequiel', 'De Biase', '12345678', '1990-12-13', 'LICENCIADO EN EDUCACION', 'Alvear 2855', '3424329667', '2024-02-26', '1');
+
+
+CREATE TABLE administrativos (
+    id_administrativo INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    persona_id       INT     (11) NOT NULL,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (persona_id) REFERENCES personas (id_persona) ON DELETE NO ACTION ON UPDATE CASCADE
+)ENGINE=InnoDB;
+
+
+CREATE TABLE docentes (
+    id_docente       INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    persona_id       INT     (11) NOT NULL,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (persona_id) REFERENCES personas (id_persona) ON DELETE NO ACTION ON UPDATE CASCADE
+)ENGINE=InnoDB;
+
+
+CREATE TABLE estudiantes (
+    id_estudiante    INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    persona_id       INT     (11) NOT NULL,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (persona_id) REFERENCES personas (id_persona) ON DELETE NO ACTION ON UPDATE CASCADE
+)ENGINE=InnoDB;
+
+/*ppffs -> padres de familias*/
+CREATE TABLE ppffs (
+    id_ppffs    INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    persona_id       INT     (11) NOT NULL,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (persona_id) REFERENCES personas (id_persona) ON DELETE NO ACTION ON UPDATE CASCADE
+)ENGINE=InnoDB;
+
 
 CREATE TABLE configuracion_instituciones (
     id_config_institucion INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -46,7 +117,7 @@ CREATE TABLE configuracion_instituciones (
 )ENGINE=InnoDB;
 
 INSERT INTO configuracion_instituciones (nombre_institucion, logo, direccion, telefono, celular, correo, fyh_creacion, estado)
-VALUES ('Instituo ICOP', 'logo.jpg', 'San Martin 1540', '3425378127', '3424329668', 'instituto@icop.edu.ar', '2024-02-17 19:05:00', '1')
+VALUES ('Instituo ICOP', 'logo.jpg', 'San Martin 1540', '3425378127', '3424329668', 'instituto@icop.edu.ar', '2024-02-17 19:05:00', '1');
 
 
 CREATE TABLE gestiones (
@@ -60,7 +131,7 @@ CREATE TABLE gestiones (
 )ENGINE=InnoDB;
 
 INSERT INTO gestiones (gestion, fyh_creacion, estado)
-VALUES ('Gestion 2024', '2024-02-19 18:08:00', '1')
+VALUES ('Gestion 2024', '2024-02-19 18:08:00', '1');
 
 
 CREATE TABLE niveles (
@@ -78,4 +149,34 @@ CREATE TABLE niveles (
 )ENGINE=InnoDB;
 
 INSERT INTO niveles (gestion_id, nivel, turno, fyh_creacion, estado)
-VALUES ('1', 'INICIAL', 'MAÑANA', '2024-02-12 15:30:00', '1')
+VALUES ('1', 'INICIAL', 'MAÑANA', '2024-02-12 15:30:00', '1');
+
+CREATE TABLE grados (
+    id_grado    INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nivel_id    INT     (11) NOT NULL,
+    curso       VARCHAR (255) NOT NULL,
+    paralelo    VARCHAR (255) NOT NULL,
+    
+
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (nivel_id) REFERENCES niveles (id_nivel) ON DELETE NO ACTION ON UPDATE CASCADE 
+)ENGINE=InnoDB;
+
+INSERT INTO grados (nivel_id, curso, paralelo, fyh_creacion, estado)
+VALUES ('1', 'PRIMARIA - PRIMERO', 'A', '2024-02-24 15:30:00', '1');
+
+CREATE TABLE materias (
+    id_materia INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_materia    VARCHAR (255) NOT NULL,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11)
+
+)ENGINE=InnoDB;
+
+INSERT INTO materias (nombre_materia, fyh_creacion, estado)
+VALUES ('Matemática', '2024-02-25 18:08:00', '1');
