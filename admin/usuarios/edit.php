@@ -15,7 +15,7 @@ include('../../app/controllers/roles/listado_roles.php');
     <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <h1>Modificar usuario: <?php echo $nombres;?></h1>
+            <h1>Modificar usuario: <?php echo $email;?></h1>
         </div>
 
         <div class="row">
@@ -52,15 +52,6 @@ include('../../app/controllers/roles/listado_roles.php');
                                                 </select>
                                                 <a href="<?php echo APP_URL;?>/admin/roles/create.php" style = "margin-left:5px" class = "btn btn-primary"><i class="bi bi-plus-circle"></i></a>
                                             </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Nombre del Usuario </label>
-
-                                            <input type="text" name = "nombre_usuario" class = "form-control" value= "<?php echo $nombres;?>"   required>
                                             
                                         </div>
                                     </div>

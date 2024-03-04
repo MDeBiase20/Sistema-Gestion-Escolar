@@ -16,7 +16,7 @@ include('../../app/controllers/roles/listado_roles.php');
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Llene los datos</h3>
@@ -44,15 +44,6 @@ include('../../app/controllers/roles/listado_roles.php');
                                                 </select>
                                                 <a href="<?php echo APP_URL;?>/admin/roles/create.php" style = "margin-left:5px" class = "btn btn-primary"><i class="bi bi-plus-circle"></i></a>
                                             </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Nombre del Usuario </label>
-
-                                            <input type="text" name = "nombre_usuario" class = "form-control"   required>
                                             
                                         </div>
                                     </div>

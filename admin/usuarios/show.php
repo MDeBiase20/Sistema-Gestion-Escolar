@@ -15,7 +15,7 @@ include('../../app/controllers/usuarios/datos_usuarios.php');
     <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <h1>Usuario: <?php echo $nombres;?></h1>
+            <h1>Usuario: <?php echo $email;?></h1>
         </div>
 
         <div class="row">
@@ -43,20 +43,12 @@ include('../../app/controllers/usuarios/datos_usuarios.php');
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Nombre del Usuario </label>
-
-                                            <input type="text" name = "nombre_usuario" class = "form-control" value = "<?php echo $nombres;?>" disabled  required>
-                                            
-                                        </div>
-                                    </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Correo Electrónico </label>
 
-                                            <input type="email" name = "email" class = "form-control" value = "<?php echo $email;?>" disabled required>
+                                            <p><?php echo $email;?></p>
                                             
                                         </div>
                                     </div>
@@ -68,7 +60,7 @@ include('../../app/controllers/usuarios/datos_usuarios.php');
                                         <div class="form-group">
                                             <label for="">Fecha y hora de creación </label>
 
-                                            <input type="text" name = "fyh_creacion" value = "<?php echo $fyh_creacion;?>" disabled class = "form-control" required>
+                                            <p><?php echo $fyh_creacion;?></p>
                                             
                                         </div>
                                     </div>
@@ -76,8 +68,10 @@ include('../../app/controllers/usuarios/datos_usuarios.php');
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Estado </label>
-
-                                            <input type="text" name = "fyh_creacion" value = "<?php if($estado == 1){ echo 'ACTIVO'; } else { echo 'INCATIVO';}?>" disabled class = "form-control" required>
+                                            <p> <?php 
+                                                        if($estado == '1') echo "ACTIVO";
+                                                        else echo "INACTIVO";
+                                                    ?>  </p>
                                             
                                         </div>
                                     </div>
