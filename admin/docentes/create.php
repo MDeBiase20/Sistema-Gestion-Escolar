@@ -37,7 +37,7 @@ include('../../app/controllers/roles/listado_roles.php');
                                                 <select name="rol_id" id="" class = "form-control">
                                                 <?php
                                                     foreach($roles as $rol){ ?>
-                                                    <option value="<?php echo $rol['id_rol'];?>" <?php echo $rol['nombre_rol'] == "DOCENTE"  ? 'selected': '' ?> disabled ><?php echo $rol['nombre_rol'];?></option>
+                                                    <option value="<?php echo $rol['id_rol'];?>" <?php echo $rol['nombre_rol'] == "DOCENTE"  ? 'selected': '' ?> ><?php echo $rol['nombre_rol'];?></option>
                                                 <?php    
                                                 }
                                                 ?>

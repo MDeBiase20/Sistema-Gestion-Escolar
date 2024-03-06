@@ -2,6 +2,10 @@
 
 include('../../../app/config.php');
 
+$id_usuario = $_POST['id_usuario'];
+$id_persona = $_POST['id_persona'];
+$id_docente = $_POST['id_docente'];
+
 $rol_id = $_POST['rol_id'];
 $nombres = $_POST['nombres'];
 $apellido = $_POST['apellido'];
@@ -18,70 +22,78 @@ $pdo->beginTransaction(); //se está creando la primera transacción a la base d
 
             /*CONSULTAS SQL PARA 3 TABLAS DIFERENTES*/
 
-            /*INSERTAR A LA TABLA USUARIOS*/
+            /*ACTUALIZAR A LA TABLA USUARIOS*/
     $password =  password_hash($ci, PASSWORD_DEFAULT);
 
-    $sentencia = $pdo->prepare('INSERT INTO usuarios
-        (rol_id, email, password, fyh_creacion, estado)
-    VALUES (:rol_id, :email,:password, :fyh_creacion, :estado)');
+    $sentencia = $pdo->prepare('UPDATE usuarios
+    SET rol_id=:rol_id,
+        email=:email,
+        password=:password,
+        fyh_actualizacion=:fyh_actualizacion
+
+    WHERE id_usuario=:id_usuario');
 
     $sentencia->bindParam(':rol_id',$rol_id);
     $sentencia->bindParam(':email',$email);
     $sentencia->bindParam(':password',$password);
-    $sentencia->bindParam('fyh_creacion',$fecha_hora);
-    $sentencia->bindParam('estado',$estado_registro);
+    $sentencia->bindParam('fyh_actualizacion',$fecha_hora);
+    $sentencia->bindParam('id_usuario',$id_usuario);
+
 
     $sentencia->execute();
 
-    //esto nos va a retornar el último id insertado
-    $id_usuario = $pdo->lastInsertId();
 
 
+            /*ACTUALIZAR A LA TABLA PERSONAS*/
 
-            /*INSERTAR A LA TABLA PERSONAS*/
+$sentencia = $pdo->prepare('UPDATE personas
+SET nombres=:nombres,
+    apellidos=:apellidos,
+    ci=:ci,
+    fecha_nacimiento=:fecha_nacimiento,
+    celular=:celular,
+    profesion=:profesion,
+    direccion=:direccion,
+    fyh_actualizacion=:fyh_actualizacion
+WHERE id_persona=:id_persona');
 
-$sentencia = $pdo->prepare('INSERT INTO personas
-    (usuario_id,nombres,apellidos,ci,fecha_nacimiento,celular,profesion,direccion, fyh_creacion, estado)
-VALUES ( :usuario_id,:nombres,:apellido,:ci,:fecha_nacimiento,:celular,:profesion,:direccion,:fyh_creacion,:estado)');
-
-$sentencia->bindParam(':usuario_id',$id_usuario);
 $sentencia->bindParam(':nombres',$nombres);
-$sentencia->bindParam(':apellido',$apellido);
+$sentencia->bindParam(':apellidos',$apellido);
 $sentencia->bindParam(':ci',$ci);
 $sentencia->bindParam(':fecha_nacimiento',$fecha_nacimiento);
 $sentencia->bindParam(':celular',$celular);
 $sentencia->bindParam(':profesion',$profesion);
 $sentencia->bindParam(':direccion',$direccion);
-$sentencia->bindParam(':fyh_creacion',$fecha_hora);
-$sentencia->bindParam(':estado',$estado_registro);
+$sentencia->bindParam(':fyh_actualizacion',$fecha_hora);
+$sentencia->bindParam(':id_persona',$id_persona);
 
 $sentencia->execute();
 
-//Traemos la última inserción de la tabla persona y la almacenamos en la variable id_persona
-$id_persona = $pdo->lastInsertId();
 
-            /*INSERTAR A LA TABLA DOCENTES*/
-$sentencia = $pdo->prepare('INSERT INTO docentes
-    (persona_id, especialidad, antiguedad, fyh_creacion, estado)
-VALUES (:persona_id, :especialidad, :antiguedad, :fyh_creacion, :estado)');
+            /*ACTUALIZAR A LA TABLA DOCENTES*/
+$sentencia = $pdo->prepare('UPDATE docentes
+SET especialidad=:especialidad,
+    antiguedad=:antiguedad,
+    fyh_actualizacion=:fyh_actualizacion
+    
+WHERE id_docente=:id_docente');
         
-        $sentencia->bindParam(':persona_id',$id_persona);
         $sentencia->bindParam(':especialidad',$especialidad);
         $sentencia->bindParam(':antiguedad',$antiguedad);
-        $sentencia->bindParam(':fyh_creacion',$fecha_hora);
-        $sentencia->bindParam(':estado',$estado_registro);
+        $sentencia->bindParam(':fyh_actualizacion',$fecha_hora);
+        $sentencia->bindParam(':id_docente',$id_docente);
 
 if($sentencia->execute()){
     $pdo->commit();
     session_start();
-    $_SESSION['mensaje'] = 'Se registró al personal docente de forma correcta';
+    $_SESSION['mensaje'] = 'Se actualizó al personal docente de forma correcta';
     $_SESSION['icono'] = 'success';
     header('Location:'.APP_URL."/admin/docentes");
 
 }else{
     $pdo->rollBack();
     session_start();
-    $_SESSION['mensaje'] = 'No se pudo registrar al personal docente';
+    $_SESSION['mensaje'] = 'No se pudo actualizar al personal docente';
     $_SESSION['icono'] = 'error';
     ?> <script>windows.history.back()</script>  <?php
 }

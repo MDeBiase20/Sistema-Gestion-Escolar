@@ -31,7 +31,7 @@ include('../../app/controllers/docentes/listado_de_docentes.php');
                                 <thead>
                                     <tr style = "text-align:center">
                                         <th>Nro</th>
-                                        <th>Nombre del Usuarios</th>
+                                        <th>Nombre del docente</th>
                                         <th>Rol</th>
                                         <th>Ci</th>
                                         <th>Fecha de nacimiento</th>
@@ -43,19 +43,19 @@ include('../../app/controllers/docentes/listado_de_docentes.php');
 
                                 <tbody>
                                     <?php 
-                                        $contador_administrativo = 0;
-                                        foreach($administrativos as $administrativo){
-                                            $id_administrativo = $administrativo['id_administrativo'];
-                                            $contador_administrativo++; ?>
+                                        $contador_docente = 0;
+                                        foreach($docentes as $docente){
+                                            $id_docente = $docente['id_docente'];
+                                            $contador_docente++; ?>
                                         <tr>
-                                            <td style = "text-align:center"><?php echo $contador_administrativo;?></td>
-                                            <td style = "text-align:center"><?php echo $administrativo['nombres']. " ". $administrativo['apellidos'];?></td>
-                                            <td style = "text-align:center"><?php echo $administrativo['nombre_rol'];?></td>
-                                            <td style = "text-align:center"><?php echo $administrativo['ci'];?></td>
-                                            <td style = "text-align:center"><?php echo $administrativo['fecha_nacimiento'];?></td>
-                                            <td style = "text-align:center"><?php echo $administrativo['email'];?></td>
+                                            <td style = "text-align:center"><?php echo $contador_docente;?></td>
+                                            <td style = "text-align:center"><?php echo $docente['nombres']. " ". $docente['apellidos'];?></td>
+                                            <td style = "text-align:center"><?php echo $docente['nombre_rol'];?></td>
+                                            <td style = "text-align:center"><?php echo $docente['ci'];?></td>
+                                            <td style = "text-align:center"><?php echo $docente['fecha_nacimiento'];?></td>
+                                            <td style = "text-align:center"><?php echo $docente['email'];?></td>
                                             <td style = "text-align:center">
-                                                <?php if($administrativo['estado'] == '1'){ ?>
+                                                <?php if($docente['estado'] == '1'){ ?>
                                                     <button class = "btn btn-success btn-sm" style = "border-radius: 20px;">ACTIVO</button>
                                                 <?php
                                                 }else{ ?>
@@ -65,15 +65,15 @@ include('../../app/controllers/docentes/listado_de_docentes.php');
                                             </td>
                                             <td style = "text-align:center">
                                                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                    <a href="show.php?id=<?php echo $id_administrativo;?>" type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
-                                                    <a href="edit.php?id=<?php echo $id_administrativo;?>" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
-                                                 <!--   <form action="<?php echo APP_URL;?>/app/controllers/administrativos/delete.php" onclick="preguntar<?php echo $id_administrativo;?>(event)" method="post" id="miFormulario<?php echo $id_administrativo;?>">
-                                                        <input type="text" name="id_administrativo" value="<?php echo $id_administrativo;?>" hidden>
+                                                    <a href="show.php?id=<?php echo $id_docente;?>" type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
+                                                    <a href="edit.php?id=<?php echo $id_docente;?>" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
+                                                 <!--   <form action="<?php echo APP_URL;?>/app/controllers/administrativos/delete.php" onclick="preguntar<?php echo $id_docente;?>(event)" method="post" id="miFormulario<?php echo $id_docente;?>">
+                                                        <input type="text" name="id_docente" value="<?php echo $id_docente;?>" hidden>
                                                         <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 0px 5px 5px 0px"><i class="bi bi-trash3"></i></button>
                                                     </form>
                                                     
                                                     <script>
-                                                        function preguntar<?php echo $id_administrativo;?>(event){
+                                                        function preguntar<?php echo $id_docente;?>(event){
                                                             event.preventDefault()
                                                             Swal.fire({
                                                                 title: 'Eliminar Registro',
@@ -86,7 +86,7 @@ include('../../app/controllers/docentes/listado_de_docentes.php');
                                                                 denyButtonText: 'Cancelar',
                                                             }).then ((result) =>{
                                                                 if(result.isConfirmed){
-                                                                    var form = $('#miFormulario<?php echo $id_administrativo;?>')
+                                                                    var form = $('#miFormulario<?php echo $id_docente;?>')
                                                                     form.submit()
                                                                 }
                                                             })
