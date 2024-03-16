@@ -82,24 +82,36 @@ CREATE TABLE docentes (
 CREATE TABLE estudiantes (
     id_estudiante    INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     persona_id       INT     (11) NOT NULL,
-    
+    nivel_id         INT     (11) NOT NULL,   
+    grado_id         INT     (11) NOT NULL,
+    rude             VARCHAR (50) NOT NULL, /*el rude es un identificador único del estudiante (País Bolivia)*/ 
+     
     fyh_creacion DATETIME NULL,
     fyh_actualizacion DATETIME NULL,
     estado VARCHAR (11),
 
-    FOREIGN KEY (persona_id) REFERENCES personas (id_persona) ON DELETE NO ACTION ON UPDATE CASCADE
+    FOREIGN KEY (persona_id) REFERENCES personas (id_persona) ON DELETE NO ACTION ON UPDATE CASCADE,
+    FOREIGN KEY (nivel_id) REFERENCES niveles (id_nivel) ON DELETE NO ACTION ON UPDATE CASCADE,
+    FOREIGN KEY (grado_id) REFERENCES grados (id_grado) ON DELETE NO ACTION ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 /*ppffs -> padres de familias*/
 CREATE TABLE ppffs (
-    id_ppffs    INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    persona_id       INT     (11) NOT NULL,
+    id_ppffs                INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id           INT     (11) NOT NULL,
+    ci_ppff                 VARCHAR (20) NOT NULL,
+    nombres_apellidos_ppff  VARCHAR (20) NOT NULL,
+    celular_ppff            VARCHAR (50) NOT NULL,
+    ocupacion               VARCHAR (50) NOT NULL,
+    ref_nombre              VARCHAR (50) NOT NULL,
+    ref_parentezco          VARCHAR (50) NOT NULL,
+    ref_celular             VARCHAR (50) NOT NULL,
     
     fyh_creacion DATETIME NULL,
     fyh_actualizacion DATETIME NULL,
     estado VARCHAR (11),
 
-    FOREIGN KEY (persona_id) REFERENCES personas (id_persona) ON DELETE NO ACTION ON UPDATE CASCADE
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes (id_estudiante) ON DELETE NO ACTION ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 
