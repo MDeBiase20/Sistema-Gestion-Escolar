@@ -8,6 +8,7 @@ include('../app/controllers/grados/listado_de_grados.php');
 include('../app/controllers/materias/listado_de_materias.php');
 include('../app/controllers/administrativos/listado_de_administrativos.php');
 include('../app/controllers/docentes/listado_de_docentes.php');
+include('../app/controllers/estudiantes/listado_de_estudiantes.php');
 
 ?>
   <!-- Content Wrapper. Contains page content -->
@@ -172,6 +173,29 @@ include('../app/controllers/docentes/listado_de_docentes.php');
                     <i class="fas" style = "color:white"><i class="bi bi-person-video3"></i></i>
                   </div>
                     <a href="<?php echo APP_URL;?>/admin/docentes" class="small-box-footer">
+                      Más información <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+              </div>
+            </div>
+
+
+            <div class="col-lg-3 col-6">
+
+              <div class="small-box bg-primary">
+                <div class="inner">
+                <?php 
+                  $contador_estudiantes = 0;
+                  foreach($estudiantes as $estudiante){
+                    $contador_estudiantes++;
+                  }
+                ?>
+                  <h3><?php echo $contador_estudiantes;?></h3>
+                  <p>Estudiantes registrados</p>
+                </div>
+                  <div class="icon">
+                    <i class="fas" style = "color:white"><i class="bi bi-person-video"></i></i>
+                  </div>
+                    <a href="<?php echo APP_URL;?>/admin/estudiantes" class="small-box-footer">
                       Más información <i class="fas fa-arrow-circle-right"></i>
                     </a>
               </div>

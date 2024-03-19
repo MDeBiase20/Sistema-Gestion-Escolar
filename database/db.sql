@@ -194,3 +194,18 @@ CREATE TABLE materias (
 
 INSERT INTO materias (nombre_materia, fyh_creacion, estado)
 VALUES ('Matemática', '2024-02-25 18:08:00', '1');
+
+CREATE TABLE pagos (
+    id_pago           INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id     INT     (11) NOT NULL,
+    mes_pagado        VARCHAR (50) NOT NULL,
+    monto_pagado      VARCHAR (10) NOT NULL,
+    fecha_pago        VARCHAR (20) NOT NULL,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes (id_estudiante) ON DELETE NO ACTION ON UPDATE CASCADE
+
+)ENGINE=InnoDB;

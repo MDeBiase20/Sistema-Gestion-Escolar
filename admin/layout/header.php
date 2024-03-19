@@ -287,12 +287,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                   </li>
                 </ul>
+
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="<?php echo APP_URL;?>/admin/docentes/asignacion.php" class="nav-link active">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Asignación de materias</p>
+                    </a>
+                  </li>
+                </ul>
+
             </li>
 
 
             <li class="nav-item">
                 <a href="#" class="nav-link active">
-                  <i class="nav-icon fas"><i class="bi bi-person-video3"></i></i>
+                  <i class="nav-icon fas"><i class="bi bi-person-video"></i></i>
                     <p>
                       Estudiantes
                       <i class="right fas fa-angle-left"></i>
@@ -318,7 +328,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
 
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon fas"><i class="bi bi-cash-stack"></i></i>
+                    <p>
+                      Pagos
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
 
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="<?php echo APP_URL;?>/admin/pagos" class="nav-link active">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Realizar pagos</p>
+                    </a>
+                  </li>
+
+                </ul>
+            </li>
 
 
           <li class="nav-item">
