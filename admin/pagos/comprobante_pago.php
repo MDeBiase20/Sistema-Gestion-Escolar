@@ -50,6 +50,16 @@ foreach ($instituciones as $institucione) {
 }
 //Trayendo datos de la institución
 
+//Trayendo los datos del pago del estudiante
+    foreach($pagos as $pago){
+        $mes_pagado = $pago['mes_pagado'];
+        $monto_pagado = $pago['monto_pagado'];
+        $fecha_pagado = $pago['fecha_pago'];
+    }
+//Trayendo los datos del pago del estudiante
+
+    
+
 // create new PDF document
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, array(210,297), true, 'UTF-8', false);
 
@@ -77,6 +87,7 @@ $pdf->setHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->setFooterMargin(PDF_MARGIN_FOOTER);
 
 $pdf->setPrintHeader(false);//esto sirve para sacar la cabecera
+$pdf->setPrintFooter(false);//esto sirve para sacar el footer
 
 // set auto page breaks
 $pdf->setAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -119,8 +130,13 @@ $style= array(
     'module_height'=>1
 );
 
-//$QR = "ESTE CONTRATO ES VERIFICADO POR EL SISTEMA '.$nombre_institucion.'";
-//$pdf->write2DBarcode($QR, 'QRCODE,L', 176, 10, 30, 30, $style);
+$QR = "ESTE RECIBO DE CAJA ES VERIFICADO POR EL SISTEMA DE PAGO DE LA UNIDAD EDUCATIVA: '.$nombre_institucion.',
+POR EL PAGO DEL MES DE: '.$mes_pagado.' LA SUMA DE  $'.$monto_pagado.' EN '.$fecha_hora.' ";
+$pdf->write2DBarcode($QR, 'QRCODE,L', 155, 40, 30, 30, $style);
+
+$QR2 = "ESTE RECIBO DE CAJA ES VERIFICADO POR EL SISTEMA DE PAGO DE LA UNIDAD EDUCATIVA: '.$nombre_institucion.',
+POR EL PAGO DEL MES DE: '.$mes_pagado.' LA SUMA DE  $'.$monto_pagado.' EN '.$fecha_hora.' ";
+$pdf->write2DBarcode($QR2, 'QRCODE,L', 155, 182, 30, 30, $style);
 
 // Set some content to print
 $html = '
@@ -128,7 +144,12 @@ $html = '
 <table border="0">
     <tr>
         <td width="200px"></td>
-        
+        <td width="200px">
+            <p style= margin:200px>
+                <b>Nro: </b>'.$id_pago.'<br>
+                <b>Fecha: </b>'.$fecha_pagado.'
+            </p>
+        </td>
     </tr>
 
     <tr>
@@ -139,30 +160,149 @@ $html = '
             <small>'.$correo.'</small>
         </td>
         <td style="text-align:left"> <h2> <u><b> RECIBO DE CAJA </b></u> </h2> </td>
+        <td style="text-align:center"> <h2><b> ORIGINAL </b></h2></td>
         
     </tr>
 </table>
+<br><br>
+<table border="0">
+    <tr>
+        <td width="170px"><b>Estudiante: </b></td>
+        <td> '.$apellido.' '.$nombres.' </td>
+    </tr>
 
-<p style="text-align:justify"> 
+    <tr>
+        <td width="170px"><b>Carnet de identidad: </b></td>
+        <td> '.$ci.'</td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Nivel: </b></td>
+        <td> '.$nivel.' - '.$turno.'</td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Curso: </b></td>
+        <td> '.$grado.' - Paralelo: '.$paralelo.'</td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Cuota: </b></td>
+        <td> '.$mes_pagado.'</td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Monto: </b></td>
+        <td> $'.$monto_pagado.'</td>
+    </tr>
+
+</table>
+
+<br><br>
 
 <table >
     <tr>
-        <td style="text-align:center">Estudiante: <br><br><br>
+        <td style="text-align:center">
             Firma: _________________________<br><br><br>
-            Fecha: _________________________
+            Fecha: _________________________<br><br>
+            <b>Recibí conforme</b>
         </td>
 
-        <td style="text-align:center">Institución: <br><br><br>
+        <td style="text-align:center">
             Firma: _________________________ <br><br><br>
-            Fecha: _________________________    
+            Fecha: _________________________ <br><br>
+            <b>Caja</b>   
         </td>
 
     </tr>
 </table>
 
-<br><br><br><br>
+<br><br><br>
 
-Fecha de Emisión: '.$dia_actual.' de '.$mes_actual.' de '.$year_actual.'</p>';
+Fecha de Emisión: '.$dia_actual.' de '.$mes_actual.' de '.$year_actual.'
+
+<p>-------------------------------------------------------------------------------------------------------------------------------------------------</p>
+<table border="0">
+    <tr>
+        <td width="200px"></td>
+        <td width="200px">
+            <p style= margin:200px>
+                <b>Nro: </b>'.$id_pago.'<br>
+                <b>Fecha: </b>'.$fecha_pagado.'
+            </p>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <b>'.$nombre_institucion.'</b> <br>
+            <small>'.$direccion.'</small> <br>
+            <small>'.$telefono.' | '.$celular.'</small> <br>
+            <small>'.$correo.'</small>
+        </td>
+        <td style="text-align:left"> <h2> <u><b> RECIBO DE CAJA </b></u> </h2> </td>
+        <td style="text-align:center"> <h2><b> DUPLICADO </b></h2></td>
+        
+    </tr>
+</table>
+<br><br>
+<table border="0">
+    <tr>
+        <td width="170px"><b>Estudiante: </b></td>
+        <td> '.$apellido.' '.$nombres.' </td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Carnet de identidad: </b></td>
+        <td> '.$ci.'</td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Nivel: </b></td>
+        <td> '.$nivel.' - '.$turno.'</td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Curso: </b></td>
+        <td> '.$grado.' - Paralelo: '.$paralelo.'</td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Cuota: </b></td>
+        <td> '.$mes_pagado.'</td>
+    </tr>
+
+    <tr>
+        <td width="170px"><b>Monto: </b></td>
+        <td> $'.$monto_pagado.'</td>
+    </tr>
+
+</table>
+
+<br><br><br>
+
+<table >
+    <tr>
+        <td style="text-align:center">
+            Firma: _________________________<br><br><br>
+            Fecha: _________________________<br><br>
+            <b>Recibí conforme</b>
+        </td>
+
+        <td style="text-align:center">
+            Firma: _________________________ <br><br><br>
+            Fecha: _________________________ <br><br>
+            <b>Caja</b>   
+        </td>
+
+    </tr>
+</table>
+
+<br><br><br>
+
+Fecha de Emisión: '.$dia_actual.' de '.$mes_actual.' de '.$year_actual.'
+';
+
 
 // Print text using writeHTMLCell()
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
