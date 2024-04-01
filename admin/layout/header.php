@@ -39,7 +39,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Bootstrap Icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+  <!-- jQuery -->
+  <script src="<?php echo APP_URL;?>/public/plugins/jquery/jquery.min.js"></script>
    <!-- DataTables -->
    <link rel="stylesheet" href="<?php echo APP_URL;?>/public/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?php echo APP_URL;?>/public/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -299,6 +300,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             </li>
 
+
+            <li class="nav-item">
+              <a href="<?php echo APP_URL;?>/admin/calificaciones" class="nav-link active">
+                <i class="nav-icon fas"><i class="bi bi-clipboard-check"></i></i>
+                <p>
+                  Calificaciones
+                </p>
+              </a>
+            </li>
 
             <li class="nav-item">
                 <a href="#" class="nav-link active">
