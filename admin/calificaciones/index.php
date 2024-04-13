@@ -12,7 +12,7 @@ include('../../app/controllers/docentes/listado_asignaciones.php');
     <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <h1>Grados asignados</h1>
+            <h1>Grados asignados para calificaciones</h1>
         </div>
 
         <div class="row">

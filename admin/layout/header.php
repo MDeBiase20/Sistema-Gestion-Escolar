@@ -4,12 +4,23 @@
 if (isset($_SESSION['sesion_email'])) {
   
   $email_sesion = $_SESSION['sesion_email'];
-  $query = $pdo->prepare("SELECT * FROM usuarios WHERE email = '$email_sesion' AND estado = '1' ");
+  $query = $pdo->prepare("SELECT * FROM usuarios AS usu
+                        INNER JOIN roles AS rol ON rol.id_rol = usu.rol_id
+                        INNER JOIN personas AS per ON per.usuario_id = usu.id_usuario
+                        WHERE usu.email = '$email_sesion' AND usu.estado = '1' ");
   $query->execute();
   $datos_usuarios = $query->fetchAll(PDO::FETCH_ASSOC);
   
   foreach($datos_usuarios as $dato_usuario){
     $nombre_sesion_usuario = $dato_usuario['email'];
+    $rol_sesion_usuario = $dato_usuario['nombre_rol'];
+    $nombres_sesion_usuario = $dato_usuario['nombres'];
+    $apellidos_sesion_usuario = $dato_usuario['apellidos'];
+    $ci_sesion_usuario = $dato_usuario['ci'];
+    // $curso = $dato_usuario['curso'];
+    // $paralelo = $dato_usuario['paralelo'];
+    // $nivel = $dato_usuario['nivel'];
+    // $turno = $dato_usuario['turno'];
   }
 
 }else{
@@ -300,15 +311,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             </li>
 
+            
+
+            <li class="nav-item">
+              <a href="<?php echo APP_URL;?>/admin/kardex" class="nav-link active">
+                <i class="nav-icon fas"><i class="bi bi-clipboard-check"></i></i>
+                <p>
+                  Kardex
+                </p>
+              </a>
+            </li>
 
             <li class="nav-item">
               <a href="<?php echo APP_URL;?>/admin/calificaciones" class="nav-link active">
-                <i class="nav-icon fas"><i class="bi bi-clipboard-check"></i></i>
+                <i class="nav-icon fas"><i class="bi bi-check2-square"></i></i>
                 <p>
                   Calificaciones
                 </p>
               </a>
             </li>
+
 
             <li class="nav-item">
                 <a href="#" class="nav-link active">

@@ -19,8 +19,141 @@ include('../app/controllers/estudiantes/listado_de_estudiantes.php');
         <div class="row">
           <h1><?php echo APP_NAME;?></h1>
         </div>
+        <!-- VISTA PARA EL ESTUDIANTE-->
+          <?php
+            if($rol_sesion_usuario == "ESTUDIANTES"){
+                foreach($estudiantes as $estudiante){
+                  if($email_sesion == $estudiante['email']){
+                      $id_estudiante = $estudiante['id_estudiante'];
+                      $nivel = $estudiante['nivel'];
+                      $turno = $estudiante['turno'];
+                      $curso = $estudiante['curso'];
+                      $paralelo = $estudiante['paralelo'];
+                  }
+                }
+              ?>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Datos del estudiante</h3>
+                    </div><!-- /.card-header -->
+                    
+                        <div class="card-body">
+                            <table class="table table-sm table-bordered table-hover table-striped">
+                              <tr>
+                                <td><b>Nombre y Apellido:</b></td>
+                                <td><?php echo $nombres_sesion_usuario." ".$apellidos_sesion_usuario;?></td>
+                              </tr>
+                              <tr>
+                                <td><b>Carnet de identidad:</b></td>
+                                <td><?php echo $ci_sesion_usuario;?></td>
+                              </tr>
+                              <tr>
+                                <td><b>Nivel:</b></td>
+                                <td><?php echo $nivel;?></td>
+                              </tr>
+                              <tr>
+                                <td><b>Turno:</b></td>
+                                <td><?php echo $turno;?></td>
+                              </tr>
+                              <tr>
+                                <td><b>Curso:</b></td>
+                                <td><?php echo $curso;?></td>
+                              </tr>
+                              <tr>
+                                <td><b>Paralelo:</b></td>
+                                <td><?php echo $paralelo;?></td>
+                              </tr>
+                            </table>
+                        </div><!-- /.card-body -->
+                  </div>
+                </div>
 
-        <div class="row">
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-info"><i class="bi bi-hospital"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Reportes de kardex</b></span>
+                                <a href="<?php echo APP_URL;?>/admin/kardex/reporte_estudiante.php?id_estudiante=<?php echo $id_estudiante;?>" class="btn btn-info btn-sm">Ingresar</a>
+                            </div>
+
+                    </div>                    
+
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-primary"><i class="bi bi-calendar-range"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Calificaciones</b></span>
+                                <a href="<?php echo APP_URL;?>/admin/calificaciones/reporte_calificaciones.php?id_estudiante=<?php echo $id_estudiante;?>" class="btn btn-primary btn-sm">Ingresar</a>
+                            </div>
+
+                    </div>                    
+
+                </div>
+
+              </div>
+
+          <?php
+            }
+          ?>
+        <!-- VISTA PARA EL ESTUDIANTE-->
+
+
+        <!-- VISTA PARA EL DOCENTE-->
+        <?php
+            if($rol_sesion_usuario == "DOCENTE"){
+                foreach($docentes as $docente){
+                  if($email_sesion == $docente['email']){
+                      $rol = $docente['nombre_rol'];
+                      $profesion = $docente['profesion'];
+                      $especialidad = $docente['especialidad'];
+                  }
+                }
+              ?>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Datos del estudiante</h3>
+                    </div><!-- /.card-header -->
+                    
+                        <div class="card-body">
+                            <table class="table table-sm table-bordered table-hover table-striped">
+                              <tr>
+                                <td><b>Nombre y Apellido:</b></td>
+                                <td><?php echo $nombres_sesion_usuario." ".$apellidos_sesion_usuario;?></td>
+                              </tr>
+                              <tr>
+                                <td><b>Rol:</b></td>
+                                <td><?php echo $rol;?></td>
+                              </tr>
+                              <tr>
+                                <td><b>Profesion:</b></td>
+                                <td><?php echo $profesion;?></td>
+                              </tr>
+                              <tr>
+                                <td><b>Especialidad:</b></td>
+                                <td><?php echo $especialidad;?></td>
+                              </tr>
+                            </table>
+                        </div><!-- /.card-body -->
+                  </div>
+                </div>
+              </div>
+          <?php
+            }
+          ?>
+        <!-- VISTA PARA EL DOCENTE-->
+
+
+
+        <!-- VISTA PARA EL ADMINISTRADOR -->
+        <?php
+            if($rol_sesion_usuario == "ADMINISTRADOR"){ ?>
+            <div class="row">
 
           <div class="col-lg-3 col-6">
 
@@ -202,6 +335,11 @@ include('../app/controllers/estudiantes/listado_de_estudiantes.php');
             </div>
 
         </div>
+        <?php
+            }
+          ?>
+        
+        <!-- VISTA PARA EL ADMINISTRADOR -->
 
         <!-- /.row -->
       </div><!-- /.container-fluid -->

@@ -247,3 +247,22 @@ CREATE TABLE calificaciones (
     FOREIGN KEY (materia_id) REFERENCES materias (id_materia) ON DELETE NO ACTION ON UPDATE CASCADE,
     FOREIGN KEY (estudiante_id) REFERENCES estudiantes (id_estudiante) ON DELETE NO ACTION ON UPDATE CASCADE
 )ENGINE=InnoDB; 
+
+CREATE TABLE kardexs (
+    id_kardex       INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    docente_id      INT (11) NOT NULL,
+    estudiante_id   INT (11) NOT NULL,
+    materia_id      INT (11) NOT NULL,
+
+    fecha           VARCHAR (50) NOT NULL,
+    observacion     VARCHAR (255) NOT NULL,
+    nota           TEXT NOT NULL,
+
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (docente_id) REFERENCES docentes (id_docente) ON DELETE NO ACTION ON UPDATE CASCADE,
+    FOREIGN KEY (materia_id) REFERENCES materias (id_materia) ON DELETE NO ACTION ON UPDATE CASCADE,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes (id_estudiante) ON DELETE NO ACTION ON UPDATE CASCADE
+)ENGINE=InnoDB;
