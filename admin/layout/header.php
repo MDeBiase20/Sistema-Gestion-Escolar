@@ -13,6 +13,7 @@ if (isset($_SESSION['sesion_email'])) {
   
   foreach($datos_usuarios as $dato_usuario){
     $nombre_sesion_usuario = $dato_usuario['email'];
+    $id_rol_sesion_usuario = $dato_usuario['id_rol'];
     $rol_sesion_usuario = $dato_usuario['nombre_rol'];
     $nombres_sesion_usuario = $dato_usuario['nombres'];
     $apellidos_sesion_usuario = $dato_usuario['apellidos'];
@@ -23,6 +24,43 @@ if (isset($_SESSION['sesion_email'])) {
     // $turno = $dato_usuario['turno'];
   }
 
+  $url = $_SERVER["PHP_SELF"]; //Con PHP_URI traigo lo que viene la ruta donde estoy ingresando con el index.php
+  $contador = strlen($url); //Cuento los caracteres que tiene dicha ruta
+  $rest = substr($url, 23, $contador); //Voy a sustraer y el restante que voy a sustraer
+                                            //va a ser de la url pero va a contar el fin ($contador) y el inicio 23 (nombre de la url + /)
+    $sql_roles_permisos = "SELECT * FROM roles_permisos AS rolper
+    INNER JOIN permisos AS per ON per.id_permiso = rolper.permiso_id
+    INNER JOIN roles AS rol ON rol.id_rol = rolper.rol_id
+    WHERE rolper.estado = '1'";
+    
+    $query_roles_permisos = $pdo->prepare($sql_roles_permisos);
+    $query_roles_permisos->execute();
+    
+    $roles_permisos = $query_roles_permisos->fetchAll(PDO::FETCH_ASSOC);
+
+//Para saber los permisos que tiene el usuario logeado
+    $contador_rol_permiso = 0; 
+    foreach($roles_permisos as $role_permiso){
+      if($id_rol_sesion_usuario == $role_permiso['rol_id']){
+        //$role_permiso['url'];
+        //Si el restante es igual a la url del permiso
+        if($rest == $role_permiso['url']){
+          //echo "Usuario autorizado";
+          $contador_rol_permiso++;
+        }else{
+          //echo "Usuario no autorizado";
+        }
+      }
+      
+    }
+    if($contador_rol_permiso>0){
+      //echo "ruta habilitada";
+    }else{
+      //echo "ruta no habilitada";
+      header('Location:'.APP_URL."/admin/no_autorizado.php");
+    }
+//Para saber los permisos que tiene el usuario logeado
+                                            
 }else{
   echo "El usuario no pasó por el login";
   header('Location:'.APP_URL."/login");
@@ -151,7 +189,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-              <li class="nav-item">
+
+<!---Código PHP para mostrar el menú según el rol del usuario-->
+  <?php
+    if(($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTOR ACADEMICO") || ($rol_sesion_usuario == "DIRECTOR ADMINISTRATIVO")){ ?>
+          
+          <li class="nav-item">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas"><i class="bi bi-gear"></i></i>
                     <p>
@@ -168,9 +211,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
             </ul>
+<?php
+    }
+  ?>
 
-
-            <li class="nav-item">
+<?php
+    if(($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTOR ACADEMICO")){ ?>
+          
+          <li class="nav-item">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas"><i class="bi bi-bookshelf"></i></i>
                     <p>
@@ -223,8 +271,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
             </ul>
+<?php
+    }
+  ?>
 
-
+<?php
+    if(($rol_sesion_usuario == "ADMINISTRADOR")){ ?>
+          
           <li class="nav-item">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas"><i class="bi bi-bookmarks"></i></i>
@@ -243,6 +296,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
 
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo APP_URL;?>/admin/roles/permisos.php" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Permisos</p>
+                </a>
+              </li>
+            </ul>
 
             <li class="nav-item">
             <a href="#" class="nav-link active">
@@ -261,9 +322,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
             </ul>
-            
+<?php
+    }
+  ?>
 
-            <li class="nav-item">
+<?php
+    if(($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTOR ACADEMICO") || ($rol_sesion_usuario == "DIRECTOR ADMINISTRATIVO")|| ($rol_sesion_usuario == "SECRETARIA")){ ?>
+          
+          <li class="nav-item">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas"><i class="bi bi-person-lines-fill"></i></i>
               <p>
@@ -280,9 +346,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
             </ul>
+<?php
+    }
+  ?>
 
-
-            <li class="nav-item">
+<?php
+    if(($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTOR ACADEMICO") || ($rol_sesion_usuario == "SECRETARIA")){ ?>
+          
+          <li class="nav-item">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas"><i class="bi bi-person-video3"></i></i>
                     <p>
@@ -299,21 +370,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                   </li>
                 </ul>
+<?php
+    }
+  ?>
 
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="<?php echo APP_URL;?>/admin/docentes/asignacion.php" class="nav-link active">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Asignación de materias</p>
-                    </a>
-                  </li>
-                </ul>
-
-            </li>
-
-            
-
-            <li class="nav-item">
+<?php
+    if(($rol_sesion_usuario == "ADMINISTRADOR")||($rol_sesion_usuario == "DOCENTE")){ ?>
+          
+          <li class="nav-item">
               <a href="<?php echo APP_URL;?>/admin/kardex" class="nav-link active">
                 <i class="nav-icon fas"><i class="bi bi-clipboard-check"></i></i>
                 <p>
@@ -321,7 +385,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
-
             <li class="nav-item">
               <a href="<?php echo APP_URL;?>/admin/calificaciones" class="nav-link active">
                 <i class="nav-icon fas"><i class="bi bi-check2-square"></i></i>
@@ -330,9 +393,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+<?php
+    }
+  ?>
 
-
-            <li class="nav-item">
+<?php
+    if(($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTOR ACADEMICO") || ($rol_sesion_usuario == "DIRECTOR ADMINISTRATIVO")|| ($rol_sesion_usuario == "SECRETARIA")|| ($rol_sesion_usuario == "CONTADOR")){ ?>
+          
+          <li class="nav-item">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas"><i class="bi bi-person-video"></i></i>
                     <p>
@@ -358,9 +426,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 </ul>
             </li>
+<?php
+    }
+  ?>
 
-
-            <li class="nav-item">
+<?php
+    if(($rol_sesion_usuario == "CONTADOR") || ($rol_sesion_usuario == "DIRECTOR ADMINISTRATIVO")|| ($rol_sesion_usuario == "ADMINISTRADOR")){ ?>
+          
+          <li class="nav-item">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas"><i class="bi bi-cash-stack"></i></i>
                     <p>
@@ -379,8 +452,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 </ul>
             </li>
+<?php
+    }
+  ?>
 
+<?php
+    if(($rol_sesion_usuario == "ADMINISTRADOR")||($rol_sesion_usuario == "DIRECTOR ACADEMICO")){ ?>
+          
+          <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="<?php echo APP_URL;?>/admin/docentes/asignacion.php" class="nav-link active">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Asignación de materias</p>
+                    </a>
+                  </li>
+                </ul>
 
+            </li>
+<?php
+    }
+  ?>
+<!---Código PHP para mostrar el menú según el rol del usuario-->
           <li class="nav-item">
             <a href="<?php echo APP_URL;?>/login/logout.php" class="nav-link" style = "background-color:#c52510; color:black">
               <i class="nav-icon fas"><i class="bi bi-door-closed-fill"></i></i>

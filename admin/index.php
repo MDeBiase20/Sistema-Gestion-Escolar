@@ -97,57 +97,86 @@ include('../app/controllers/estudiantes/listado_de_estudiantes.php');
               </div>
 
           <?php
-            }
-          ?>
-        <!-- VISTA PARA EL ESTUDIANTE-->
-
-
-        <!-- VISTA PARA EL DOCENTE-->
-        <?php
-            if($rol_sesion_usuario == "DOCENTE"){
-                foreach($docentes as $docente){
-                  if($email_sesion == $docente['email']){
-                      $rol = $docente['nombre_rol'];
-                      $profesion = $docente['profesion'];
-                      $especialidad = $docente['especialidad'];
-                  }
+            }else if($rol_sesion_usuario == "DOCENTE"){
+              foreach($docentes as $docente){
+                if($email_sesion == $docente['email']){
+                    $rol = $docente['nombre_rol'];
+                    $profesion = $docente['profesion'];
+                    $especialidad = $docente['especialidad'];
                 }
-              ?>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="card card-outline card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Datos del estudiante</h3>
-                    </div><!-- /.card-header -->
-                    
-                        <div class="card-body">
-                            <table class="table table-sm table-bordered table-hover table-striped">
-                              <tr>
-                                <td><b>Nombre y Apellido:</b></td>
-                                <td><?php echo $nombres_sesion_usuario." ".$apellidos_sesion_usuario;?></td>
-                              </tr>
-                              <tr>
-                                <td><b>Rol:</b></td>
-                                <td><?php echo $rol;?></td>
-                              </tr>
-                              <tr>
-                                <td><b>Profesion:</b></td>
-                                <td><?php echo $profesion;?></td>
-                              </tr>
-                              <tr>
-                                <td><b>Especialidad:</b></td>
-                                <td><?php echo $especialidad;?></td>
-                              </tr>
-                            </table>
-                        </div><!-- /.card-body -->
-                  </div>
+              }
+            ?>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card card-outline card-primary">
+                  <div class="card-header">
+                      <h3 class="card-title">Datos del docente</h3>
+                  </div><!-- /.card-header -->
+                  
+                      <div class="card-body">
+                          <table class="table table-sm table-bordered table-hover table-striped">
+                            <tr>
+                              <td><b>Nombre y Apellido:</b></td>
+                              <td><?php echo $nombres_sesion_usuario." ".$apellidos_sesion_usuario;?></td>
+                            </tr>
+                            <tr>
+                              <td><b>Rol:</b></td>
+                              <td><?php echo $rol;?></td>
+                            </tr>
+                            <tr>
+                              <td><b>Profesion:</b></td>
+                              <td><?php echo $profesion;?></td>
+                            </tr>
+                            <tr>
+                              <td><b>Especialidad:</b></td>
+                              <td><?php echo $especialidad;?></td>
+                            </tr>
+                          </table>
+                      </div><!-- /.card-body -->
                 </div>
               </div>
-          <?php
-            }
-          ?>
-        <!-- VISTA PARA EL DOCENTE-->
+            </div>
+        <?php
+          }else{
+              $sql_datos = " SELECT * FROM usuarios AS usu
+              INNER JOIN roles AS rol ON rol.id_rol = usu.rol_id
+              INNER JOIN personas AS per ON per.usuario_id = usu.id_usuario
+              WHERE usu.estado = '1' AND usu.email = '$email_sesion' ";
+              $query_datos = $pdo->prepare($sql_datos);
+              $query_datos->execute();
+          
+              $datos = $query_datos->fetchAll(PDO::FETCH_ASSOC);
 
+              foreach($datos as $dato){
+                $nombre_rol = $dato['nombre_rol'];
+              }?>
+              <div class="row">
+              <div class="col-md-6">
+                <div class="card card-outline card-primary">
+                  <div class="card-header">
+                      <h3 class="card-title">Datos del usuario</h3>
+                  </div><!-- /.card-header -->
+                  
+                      <div class="card-body">
+                          <table class="table table-sm table-bordered table-hover table-striped">
+                            <tr>
+                              <td><b>Nombre y Apellido:</b></td>
+                              <td><?php echo $nombres_sesion_usuario." ".$apellidos_sesion_usuario;?></td>
+                            </tr>
+                            <tr>
+                              <td><b>Rol:</b></td>
+                              <td><?php echo $nombre_rol;?></td>
+                            </tr>
+                          </table>
+                      </div><!-- /.card-body -->
+                </div>
+              </div>
+            </div>
+          <?php
+          }
+        ?>
+
+        <!-- VISTA PARA EL ESTUDIANTE-->
 
 
         <!-- VISTA PARA EL ADMINISTRADOR -->

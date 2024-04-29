@@ -266,3 +266,29 @@ CREATE TABLE kardexs (
     FOREIGN KEY (materia_id) REFERENCES materias (id_materia) ON DELETE NO ACTION ON UPDATE CASCADE,
     FOREIGN KEY (estudiante_id) REFERENCES estudiantes (id_estudiante) ON DELETE NO ACTION ON UPDATE CASCADE
 )ENGINE=InnoDB;
+
+CREATE TABLE permisos (
+    id_permiso        INT     (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+
+    nombre_url        VARCHAR (100) NOT NULL,
+    url               TEXT    NOT NULL,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11)
+
+)ENGINE=InnoDB;
+
+CREATE TABLE roles_permisos (
+    id_roles_permiso INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    rol_id INT(11) NOT NULL,
+    permiso_id INT(11) NOT NULL,
+
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR (11),
+
+    FOREIGN KEY (rol_id) REFERENCES roles (id_rol) ON DELETE NO ACTION ON UPDATE CASCADE,
+    FOREIGN KEY (permiso_id) REFERENCES permisos (id_permiso) ON DELETE NO ACTION ON UPDATE CASCADE
+
+)ENGINE=InnoDB;
