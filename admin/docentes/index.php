@@ -67,7 +67,7 @@ include('../../app/controllers/docentes/listado_de_docentes.php');
                                                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                                     <a href="show.php?id=<?php echo $id_docente;?>" type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
                                                     <a href="edit.php?id=<?php echo $id_docente;?>" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
-                                                 <!--   <form action="<?php echo APP_URL;?>/app/controllers/administrativos/delete.php" onclick="preguntar<?php echo $id_docente;?>(event)" method="post" id="miFormulario<?php echo $id_docente;?>">
+                                                <form action="<?php echo APP_URL;?>/app/controllers/docentes/delete_docentes.php" onclick="preguntar<?php echo $id_docente;?>(event)" method="post" id="miFormulario<?php echo $id_docente;?>">
                                                         <input type="text" name="id_docente" value="<?php echo $id_docente;?>" hidden>
                                                         <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 0px 5px 5px 0px"><i class="bi bi-trash3"></i></button>
                                                     </form>
@@ -92,7 +92,7 @@ include('../../app/controllers/docentes/listado_de_docentes.php');
                                                             })
                                                         }
                                                     </script>
-                                                    -->            
+                                                            
                                                 </div>
                                             </td>
                                         </tr>    

@@ -55,9 +55,7 @@ foreach($estudiantes as $estudiante){
                                 <tbody>
                                     <?php 
                                         $contador_estudiantes = 0;
-                                        $nota1 = ""; //La declaro vacio para que no de error cuando no haya registros cargados en la BD
-                                        $nota2 = ""; //La declaro vacio para que no de error cuando no haya registros cargados en la BD
-                                        $nota3 = ""; //La declaro vacio para que no de error cuando no haya registros cargados en la BD
+                                        
                                         foreach($estudiantes as $estudiante){
                                             if($id_grado_get == $estudiante['grado_id']){
                                                 $id_estudiantes = $estudiante['id_estudiante'];
@@ -73,6 +71,11 @@ foreach($estudiantes as $estudiante){
                                                             <td style = "text-align:center"><?php echo $estudiante['paralelo'];?></td>
 
                                                             <?php
+                                                            
+                                                            $nota1 = ""; //La declaro vacio para que no de error cuando no haya registros cargados en la BD
+                                                            $nota2 = ""; //La declaro vacio para que no de error cuando no haya registros cargados en la BD
+                                                            $nota3 = ""; //La declaro vacio para que no de error cuando no haya registros cargados en la BD
+
                                                                 foreach($calificaciones as $calificacion){
                                                                     if( ($calificacion['docente_id']==$id_docente_get) && 
                                                                         ($calificacion['estudiante_id']==$id_estudiantes) &&

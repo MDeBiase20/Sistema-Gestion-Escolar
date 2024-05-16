@@ -21,11 +21,11 @@ try {
         $_SESSION['icono'] = 'error';
         header('Location:'.APP_URL."/admin/roles");
 }
-} catch (Exception $Exception) {
+} catch (Exception $exception) {
         session_start();
         $_SESSION['mensaje'] = 'Error, no se puede eliminar este rol por que existe en otras tablas';
         $_SESSION['icono'] = 'error';
-        header('Location:'.APP_URL."/admin/roles");
+        ?> <script>window.history.back()</script>  <?php
 }
 
 ?>

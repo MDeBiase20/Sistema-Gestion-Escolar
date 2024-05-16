@@ -8,7 +8,8 @@ $sentencia = $pdo->prepare("DELETE FROM usuarios WHERE id_usuario=:id_usuario");
 
 $sentencia->bindParam('id_usuario', $id_usuario);
 
-
+try {
+    
     if($sentencia->execute()){
         session_start();
         $_SESSION['mensaje'] = 'Se eliminó el usuario de la base de datos de forma correcta';
@@ -20,5 +21,12 @@ $sentencia->bindParam('id_usuario', $id_usuario);
         $_SESSION['icono'] = 'error';
         header('Location:'.APP_URL."/admin/usuarios");
 }
+} catch (Exception $exception) {
+    session_start();
+    $_SESSION['mensaje'] = 'Error al eliminar el usuario de la base de datos, porque este usuario ya se encuentra registrado en otra tabla';
+    $_SESSION['icono'] = 'error';
+    header('Location:'.APP_URL."/admin/usuarios");
+}
+
 
 ?>

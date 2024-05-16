@@ -63,7 +63,7 @@ include('../../../app/controllers/configuraciones/gestion/listado_de_gestion.php
                                                     <a href="show.php?id=<?php echo $id_gestion;?>" type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
                                                     <a href="edit.php?id=<?php echo $id_gestion;?>" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
                                                     <form action="<?php echo APP_URL;?>/app/controllers/configuraciones/institucion/delete.php" onclick="preguntar<?php echo $id_gestion;?>(event)" method="post" id="miFormulario<?php echo $id_gestion;?>">
-                                                        <input type="text" name="id_configuracion" value="<?php echo $id_gestion;?>" hidden>
+                                                        <input type="text" name="id_gestion" value="<?php echo $id_gestion;?>" hidden>
                                                         <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 0px 5px 5px 0px"><i class="bi bi-trash3"></i></button>
                                                     </form>
                                                     
